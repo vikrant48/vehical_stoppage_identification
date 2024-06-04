@@ -7,7 +7,7 @@ function App() {
   const [data,setData] = useState([]);
   const [path, setPath] = useState([]);
   const [stoppages, setStoppages] = useState([]);
-  const [threshold, setThreshold] = useState(3); // Default threshold in minutes
+  const [threshold, setThreshold] = useState(5); // Default threshold in minutes
 
   useEffect(() => {
     // Fetch GPS data
