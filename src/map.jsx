@@ -5,7 +5,7 @@ import L from 'leaflet';
 
 //  marker icon to locate stoppage 
 const marker = new L.Icon({
-  iconUrl: '<https://www.flaticon.com/free-icons/location', 
+  iconUrl: 'https://www.flaticon.com/free-icon/location_535188', 
   iconSize: [30, 30],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
