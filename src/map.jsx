@@ -20,7 +20,7 @@ const Map = ({ path, stoppages }) => {
       <Polyline positions={path.map(p => [p.lat, p.lng])} color="red" />
       {stoppages.map((stop, index) => (
         <Marker key={index} position={[stop.lat, stop.lng]} icon={marker}>
-           {/* // information at stoppages  */}
+           { 'stoppage'}
           <Popup>
             <div>
               <p>Reach Time: {stop.reachTime}</p>      
