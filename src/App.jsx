@@ -42,10 +42,11 @@ function App() {
     const path = gpsData.map(point => ({
       lat: parseFloat(point.latitude),
       lng: parseFloat(point.longitude),
-      time: new Date(point.eventGeneratedTime),
+      time: new Date(Number(point.eventGeneratedTime)),
       speed: parseFloat(point.speed)
     }));
     setPath(path);
+    console.log("Path Data: ", path); // Logging path data for debugging
 
     const stoppages = [];
     let stopStart = null;
@@ -68,7 +69,21 @@ function App() {
         stopStart = null;
       }
     }
+    // Check for an ongoing stoppage at the end of the data
+    if (stopStart) {
+      const duration = (path[path.length - 1].time - stopStart.time) / 60000;
+      if (duration >= threshold) {
+        stoppages.push({
+          lat: stopStart.lat,
+          lng: stopStart.lng,
+          reachTime: stopStart.time.toLocaleString(),
+          endTime: path[path.length - 1].time.toLocaleString(),
+          duration: duration.toFixed(4)
+        });
+      }
+    }
     setStoppages(stoppages);
+    console.log('Stoppages:', stoppages); // Debugging output
   };
 
   
@@ -88,9 +103,33 @@ function App() {
         <p>This assignment is done by vikrant chauhan </p>
       </label>
       {path.length > 0 && <Mapfunction path={path} stoppages={stoppages} />}
+      {stoppages.length > 0 && (
+          <table>
+            <thead>
+              <tr>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Reach Time</th>
+                <th>End Time</th>
+                <th>Duration (minutes)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stoppages.map((stop, index) => (
+                <tr key={index}>
+                  <td>{stop.lat}</td>
+                  <td>{stop.lng}</td>
+                  <td>{stop.reachTime}</td>
+                  <td>{stop.endTime}</td>
+                  <td>{stop.duration}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
     </div>
     </>
-  )
+  );
 }
 
 export default App
